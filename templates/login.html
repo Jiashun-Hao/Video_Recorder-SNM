@@ -7,27 +7,165 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>로그인 · Backend Config</title>
-  <style>
-    :root{--bg:#0f172a;--text:#e5e7eb;--muted:#94a3b8;--acc:#3b82f6;--radius:14px}
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(1200px 700px at 70% -10%, #1f2937 0%, #0b1220 45%, #030712 100%);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'PingFang SC','Noto Sans CJK SC','Noto Sans KR','Microsoft Yahei',sans-serif}
-    .wrap{min-height:100dvh;display:grid;place-items:center;padding:24px}
-    .card{width:min(560px,100%);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:22px 20px;box-shadow:0 20px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)}
-    h1{margin:0 0 6px 0;font-size:22px;font-weight:800}
-    .sub{color:var(--muted);margin-bottom:18px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:640px){.grid{grid-template-columns:1fr}}
-    .field{display:flex;flex-direction:column;gap:6px}
-    label{font-size:12px;color:#cbd5e1}
-    input{height:42px;padding:0 12px;border-radius:10px;border:1px solid rgba(148,163,184,.35);background:rgba(255,255,255,.04);color:var(--text)}
-    .row{display:flex;gap:10px;align-items:center;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
-    .btn{height:38px;padding:0 14px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#e5e7eb;cursor:pointer;transition:.18s;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
-    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06)}
-    .primary{background:linear-gradient(180deg,#2563eb,#1d4ed8);border-color:rgba(59,130,246,.6)}
-    .note{font-size:12px;color:#9aa4b2;margin-top:8px}
-    .toast{position:fixed;right:16px;bottom:16px;padding:10px 14px;border-radius:10px;background:#0b1220;border:1px solid rgba(148,163,184,.25);color:#e5e7eb;box-shadow:0 8px 18px rgba(0,0,0,.35);opacity:0;transform:translateY(6px);transition:.2s;pointer-events:none}
-    .toast.show{opacity:1;transform:translateY(0)}
-  </style>
+<style>
+  :root {
+    --bg: #0f172a;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --acc: #3b82f6;
+    --radius: 14px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: radial-gradient(
+      1200px 700px at 70% -10%,
+      #1f2937 0%,
+      #0b1220 45%,
+      #030712 100%
+    );
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+      'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans KR', 'Microsoft Yahei',
+      sans-serif;
+  }
+
+  .wrap {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+
+  .card {
+    width: min(560px, 100%);
+    padding: 22px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius);
+
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.01)
+    );
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .sub {
+    margin-bottom: 18px;
+    color: var(--muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 12px;
+    color: #cbd5e1;
+  }
+
+  input {
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .btn {
+    height: 38px;
+    padding: 0 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.04);
+    color: #e5e7eb;
+    cursor: pointer;
+    transition: 0.18s;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .primary {
+    background: linear-gradient(180deg, #2563eb, #1d4ed8);
+    border-color: rgba(59, 130, 246, 0.6);
+  }
+
+  .note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #9aa4b2;
+  }
+
+  .toast {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+
+    padding: 10px 14px;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 10px;
+
+    background: #0b1220;
+    color: #e5e7eb;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+
+    opacity: 0;
+    transform: translateY(6px);
+    transition: 0.2s;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+  
 </head>
 <body>
 <div class="wrap">
@@ -72,7 +210,7 @@
   function getRedirectTarget(){
     const u = new URL(location.href);
     const r = u.searchParams.get('redirect');
-    return r && r.startsWith('/') ? r : 'index.html'; // 改成你的首页文件名
+    return r && r.startsWith('/') ? r : 'index.html'; 
   }
 
   async function callAPI(path, method='GET', body){
@@ -95,7 +233,7 @@
     }catch(e){ /* 网络失败时不跳转 */ }
   })();
 
-  // Load existing config（你按钮文案叫“Save Path”，但这里是读取后端当前配置）
+  // Load existing config
   qs('#btnCfgLoad').addEventListener('click', async()=>{
     try{
       const cfg = await callAPI(ENDPOINTS.getCfg,'GET');
@@ -107,7 +245,7 @@
     }catch(e){ console.error(e); toast('Load failed'); }
   });
 
-  // Test connection (does not persist)
+  // Test connection 
   qs('#btnTest').addEventListener('click', async()=>{
     const host=qs('#host').value.trim(), user=qs('#user').value.trim(), pass=qs('#pass').value;
     if(!host){alert('PEARL_HOST 를 입력하세요.');return}
@@ -115,7 +253,7 @@
     catch(e){ console.error(e); toast('Test failed'); }
   });
 
-  // Save & Login（关键更改：capture_dir 为空时不发送该字段）
+  // Save & Login（capture_dir 为空时不发送该字段）
   qs('#btnLogin').addEventListener('click', async()=>{
     const host=qs('#host').value.trim(), user=qs('#user').value.trim(), pass=qs('#pass').value;
     const capture_dir_raw = qs('#saveDir').value;
