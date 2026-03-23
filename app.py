@@ -19,10 +19,13 @@ def resource_path(rel: str) -> str:
     base = getattr(sys, "_MEIPASS", os.path.abspath(os.path.dirname(__file__)))
     return os.path.join(base, rel)
 
+
+
 # 稳妥的用户数据目录（Windows: %LOCALAPPDATA%\Museumi\PearlCtl）
 APPDATA_BASE = os.environ.get("LOCALAPPDATA") or os.path.join(os.path.expanduser("~"), "AppData", "Local")
 APPDIR = os.path.join(APPDATA_BASE, "Museumi", "PearlCtl")
 os.makedirs(APPDIR, exist_ok=True)
+
 
 # =========================
 # 基础与静态资源
@@ -31,10 +34,12 @@ os.makedirs(APPDIR, exist_ok=True)
 CAPTURE_SAVE_DIR = os.getenv("CAPTURE_SAVE_DIR", os.path.join(APPDIR, "Captures"))
 os.makedirs(CAPTURE_SAVE_DIR, exist_ok=True)
 
+
 # 静态目录指向打包资源目录（根目录），以便直接访问 index.html / login.html / 静态文件
 app = Flask(__name__, static_folder=resource_path("."), static_url_path='')
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("pearl")
+
 
 @app.route('/')
 def _root():
@@ -49,6 +54,10 @@ def _ls():
         "exists_index_html": os.path.exists(os.path.join(base, 'index.html')),
         "files": sorted(os.listdir(base))
     })
+
+
+
+
 
 # =========================
 # 配置持久化（与 /config 对应）
@@ -67,6 +76,7 @@ DEFAULT_CFG = {
     "channels": [int(x) for x in os.getenv("PEARL_CHANNELS", "1,2,3,4,5,6").split(",")],
     "capture_dir": CAPTURE_SAVE_DIR,
 }
+
 
 def load_cfg():
     if os.path.exists(CONFIG_PATH):
@@ -102,6 +112,7 @@ def _chs(v):
 # =========================
 # Requests 会话
 # =========================
+
 session = requests.Session()
 retry = Retry(
     total=2,
@@ -116,6 +127,9 @@ session.mount("https://", adapter)
 def _auth_tuple():
     u, p = CFG.get("user") or "", CFG.get("pass") or ""
     return (u, p) if (u or p) else None
+
+
+
 
 # =========================
 # 鉴权（Bearer Token）
@@ -152,6 +166,9 @@ def auth_required(fn):
         return fn(*args, **kwargs)
     return _wrap
 
+
+
+
 # =========================
 # 健康检查
 # =========================
@@ -160,6 +177,8 @@ def health():
     return jsonify({"ok": True, "pearl": {
         "host": CFG["host"], "scheme": CFG["scheme"], "channels": CFG["channels"]
     }})
+
+
 
 # =========================
 # 配置接口（登录前可用）
@@ -202,6 +221,8 @@ def set_config():
         "capture_dir": CFG["capture_dir"], "verify_ssl": CFG["verify_ssl"],
         "timeout": CFG["timeout"], "channels": CFG["channels"],
     }})
+
+
 
 # =========================
 # 登录/会话接口
@@ -267,6 +288,9 @@ def auth_logout():
     if s:
         SESSIONS.pop(s["token"], None)
     return jsonify({"ok": True})
+
+
+
 
 # =========================
 # 设备控制（需要登录）
@@ -382,6 +406,8 @@ def capture():
         "url": rel_url, "bytes": len(content), "content_type": mime
     })
 
+
+
 # =========================
 # 端口占位（保留）
 # =========================
@@ -412,6 +438,8 @@ def set_port2():
     if not body.get("mac") or not body.get("ip"):
         return jsonify({"ok": False, "error": "mac and ip are required"}), 400
     return jsonify({"ok": True, "saved": body})
+
+
 
 # =========================
 # 启动
