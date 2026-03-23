@@ -1,4 +1,5 @@
-<!-- =========================
+<!-- @Jiashun 
+=========================
 = index.html  (Monitor Control UI)
 ========================= -->
 <!DOCTYPE html>
@@ -9,82 +10,301 @@
   <title>모니터 / Monitor Control UI</title>
   <style>
     :root {
-      --bg:#0f172a; --panel:#111827; --muted:#6b7280; --card:#0b1220; --acc:#3b82f6;
-      --ok:#10b981; --warn:#f59e0b; --danger:#ef4444; --text:#e5e7eb; --radius:12px; --gap:14px;
+      --bg:#0f172a; 
+      --panel:#111827; 
+      --muted:#6b7280; 
+      --card:#0b1220;
+      --acc:#3b82f6;
+      --ok:#10b981; 
+      
+      --warn:#f59e0b;
+      --danger:#ef4444; 
+      --text:#e5e7eb; 
+      --radius:12px; 
+      --gap:14px;
     }
+    
     *{box-sizing:border-box}
-    body{
-      margin:0; padding:24px;
-      background: radial-gradient(1200px 700px at 70% -10%, #1f2937 0%, #0b1220 45%, #030712 100%);
-      color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans KR', 'Microsoft Yahei', sans-serif;
-    }
-    .wrap{max-width:1100px; margin:0 auto;}
-    h1{font-size:22px; font-weight:700; letter-spacing:.2px; margin:0 0 14px 0;}
-    .subtitle{color:var(--muted); margin-left:6px}
-    .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px}
+    
+    body {
+      margin: 0;
+      padding: 24px;
+    
+      background: radial-gradient(
+        1200px 700px at 70% -10%,
+        #1f2937 0%,
+        #0b1220 45%,
+        #030712 100%
+      );
+    
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+        'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans KR', 'Microsoft Yahei',
+        sans-serif;
+     }
+    
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+     }
+    
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      margin: 0 0 14px;
+     }
+    
+    .subtitle {
+      margin-left: 6px;
+      color: var(--muted);
+     }
+    
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+     }
+    
     .panel{
       background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      
       border:1px solid rgba(255,255,255,.08);
       border-radius:var(--radius);
+      
       padding:18px;
+      
       box-shadow: 0 20px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.04);
     }
+    
     .all-actions{
       display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;
+      
       padding:12px; border:1px solid rgba(255,255,255,.06); border-radius:10px;
       background: rgba(17,24,39,.55);
     }
-    .tag{font-size:12px; color:#cbd5e1; background:rgba(59,130,246,.15); border:1px solid rgba(59,130,246,.35);
-      padding:4px 8px; border-radius:999px; letter-spacing:.2px}
+    
+    .tag{
+         font-size:12px; color:#cbd5e1; background:rgba(59,130,246,.15);
+         border:1px solid rgba(59,130,246,.35);
+         padding:4px 8px; border-radius:999px; letter-spacing:.2px
+         }
+    
     table{width:100%; border-collapse:separate; border-spacing:0}
-    thead th{
-      text-align:center; font-weight:700; font-size:14px; padding:14px 6px;
-      position:sticky; top:0; background:rgba(2,6,23,.7); backdrop-filter: blur(8px);
+    
+    thead th {
+      position: sticky;
+      top: 0;
+      padding: 14px 6px;
+      background: rgba(2, 6, 23, 0.7);
+      backdrop-filter: blur(8px);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
     }
-    thead th:first-child{ text-align:left; padding-left:12px}
-    tbody th{
-      text-align:left; font-weight:600; color:#cbd5e1; padding:12px; width:170px;
-      background: rgba(2,6,23,.35); position:relative;
+    
+    thead th:first-child {
+      text-align: left;
+      padding-left: 12px;
     }
-    tbody tr:nth-child(odd) td{ background: rgba(255,255,255,.03)}
-    tbody tr:nth-child(even) td{ background: rgba(255,255,255,.02)}
-    td{padding:10px 8px; text-align:center; vertical-align:middle;}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      height:34px; padding:0 12px; border-radius:10px; border:1px solid transparent;
-      background:#0b1220; color:#e5e7eb; cursor:pointer; user-select:none;
-      transition:.18s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    
+    tbody th {
+      position: relative;
+      width: 170px;
+      padding: 12px;
+      background: rgba(2, 6, 23, 0.35);
+      color: #cbd5e1;
+      text-align: left;
+      font-weight: 600;
     }
-    .btn:disabled{opacity:.5; cursor:not-allowed}
-    .btn:hover{transform: translateY(-1px); box-shadow:0 8px 18px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06)}
-    .btn:active{transform: translateY(0) scale(.99)}
-    .primary{ background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color: rgba(59,130,246,.6)}
-    .danger{ background: linear-gradient(180deg, #ef4444, #dc2626); border-color: rgba(239,68,68,.6)}
-    .ghost{ background: rgba(255,255,255,.04); border-color: rgba(148,163,184,.25)}
-    .status{
-      display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
-      white-space: nowrap; width:15ch; justify-content: flex-start;
-      background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); font-size:12px;
+    
+    tbody tr:nth-child(odd) td {
+      background: rgba(255, 255, 255, 0.03);
     }
-    .dot{width:8px; height:8px; border-radius:50%}
-    .idle .dot{background:#64748b}
-    .rec .dot{background:#ef4444; box-shadow:0 0 0 6px rgba(239,68,68,.12)}
-    .capturing .dot{background:#f59e0b; box-shadow:0 0 0 6px rgba(245,158,11,.12)}
-    .grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:var(--gap); }
-    @media (max-width: 860px){ .grid{ grid-template-columns:1fr }}
-    .field{ display:flex; flex-direction:column; gap:6px }
-    label{ font-size:12px; color:#cbd5e1; letter-spacing:.2px }
-    input{ height:40px; padding:0 12px; border-radius:10px; outline:none;
-      border:1px solid rgba(148,163,184,.35); background:rgba(255,255,255,.04); color:var(--text); }
-    .note{ color:#9aa4b2; font-size:12px; margin-top:6px }
-    .kbd{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size:12px; background:rgba(255,255,255,.06); padding:2px 6px; border-radius:6px; border:1px solid rgba(255,255,255,.12);}
-    .footer{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; flex-wrap:wrap}
-    .toast{ position:fixed; right:16px; bottom:16px; padding:10px 14px; border-radius:10px;
-      background:#0b1220; border:1px solid rgba(148,163,184,.25); color:#e5e7eb;
-      box-shadow:0 8px 18px rgba(0,0,0,.35); opacity:0; transform: translateY(6px);
-      transition:.2s ease; pointer-events:none; }
-    .toast.show{opacity:1; transform: translateY(0)}
+    
+    tbody tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    
+    td {
+      padding: 10px 8px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    
+      height: 34px;
+      padding: 0 12px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+    
+      background: #0b1220;
+      color: #e5e7eb;
+      cursor: pointer;
+      user-select: none;
+    
+      transition: 0.18s ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    
+    .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+    }
+    
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    
+    .btn:active {
+      transform: translateY(0) scale(0.99);
+    }
+    
+    .primary {
+      background: linear-gradient(180deg, #2563eb, #1d4ed8);
+      border-color: rgba(59, 130, 246, 0.6);
+    }
+    
+    .danger {
+      background: linear-gradient(180deg, #ef4444, #dc2626);
+      border-color: rgba(239, 68, 68, 0.6);
+    }
+    
+    .ghost {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+    
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+    
+      width: 15ch;
+      padding: 6px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+    
+      background: rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+      font-size: 12px;
+    }
+    
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .idle .dot {
+      background: #64748b;
+    }
+    
+    .rec .dot {
+      background: #ef4444;
+      box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.12);
+    }
+    
+    .capturing .dot {
+      background: #f59e0b;
+      box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.12);
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap);
+    }
+    
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    label {
+      font-size: 12px;
+      color: #cbd5e1;
+      letter-spacing: 0.2px;
+    }
+    
+    input {
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 10px;
+      outline: none;
+    
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+    
+    .note {
+      margin-top: 6px;
+      color: #9aa4b2;
+      font-size: 12px;
+    }
+    
+    .kbd {
+      padding: 2px 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+    
+      background: rgba(255, 255, 255, 0.06);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+    }
+    
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    
+    .toast {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+    
+      padding: 10px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+    
+      background: #0b1220;
+      color: #e5e7eb;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+    
+      opacity: 0;
+      transform: translateY(6px);
+      transition: 0.2s ease;
+      pointer-events: none;
+    }
+    
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    
   </style>
 </head>
 <body>
@@ -92,17 +312,21 @@
     <div class="topbar">
       <h1>모니터 UI <span class="subtitle">/ Monitor · CH1–CH4</span></h1>
       <div>
+        
         <button class="btn ghost" id="btnReboot" title="재시작">Reboot</button>
         <button class="btn ghost" id="btnLogout" title="로그아웃">Logout</button>
+        
       </div>
     </div>
     
     <div class="panel">
       <div class="all-actions">
+        
         <span class="tag">통합 녹화 · Unified Record</span>
         <button class="btn primary" id="btnAllStart">Start All</button>
         <button class="btn danger"  id="btnAllStop">Stop All</button>
         <span class="note">모든 채널에 일괄 적용됩니다 / Applies to all channels.</span>
+        
       </div>
 
       <div class="table-wrap">
@@ -116,6 +340,7 @@
           <thead>
             <tr>
               <th>동작 / Action</th>
+              
               <th><span class="ch-name" data-ch="1" tabindex="0">CH1</span></th>
               <th><span class="ch-name" data-ch="2" tabindex="0">CH2</span></th>
               <th><span class="ch-name" data-ch="3" tabindex="0">CH3</span></th>
@@ -180,14 +405,15 @@
       getCfg:'/config', setCfg:'/config',
       me:'/auth/me',
       reboot:'/reboot',
-      chNames:'/channel_names'   // ← 新增：通道名持久化接口
+      chNames:'/channel_names'   //通道名持久化接口
     };
 
     // ======= Auth Gate helpers =======
-    function currentPathWithQuery(){
-      const {pathname, search, hash} = location;
-      return pathname + (search||'') + (hash||'');
+    function currentPathWithQuery() {
+      const { pathname, search, hash } = location;
+      return pathname + (search || '') + (hash || '');
     }
+    
     function redirectToLogin(){
       const target = encodeURIComponent(currentPathWithQuery());
       location.replace(`/login.html?redirect=${target}`);
@@ -216,17 +442,26 @@
     const statusEl = ch => qs(`#st-${ch}`);
 
     const channels = [1,2,3,4,5,6];
-    const ChannelState = {}; for (const ch of channels) ChannelState[ch] = { main: 'idle', capturing: false };
+    const ChannelState = {}; 
+    for (const ch of channels) ChannelState[ch] = { 
+      main: 'idle', capturing: false 
+    };
 
     function renderOne(ch){
       const el = statusEl(ch); if(!el) return;
       el.classList.remove('idle','rec','capturing');
-      if (ChannelState[ch].main === 'recording') el.classList.add('rec'); else el.classList.add('idle');
+      if (ChannelState[ch].main === 'recording') el.classList.add('rec'); 
+          else el.classList.add('idle');
+      
       if (ChannelState[ch].capturing) el.classList.add('capturing');
+      
       const txt = el.querySelector('.txt');
-      if (ChannelState[ch].main === 'recording') txt.textContent = ChannelState[ch].capturing ? 'Capturing' : 'Recording';
-      else txt.textContent = ChannelState[ch].capturing ? 'Capturing' : 'Idle';
+      
+      if (ChannelState[ch].main === 'recording') txt.textContent =
+            ChannelState[ch].capturing ? 'Capturing' : 'Recording';
+        else txt.textContent = ChannelState[ch].capturing ? 'Capturing' : 'Idle';
     }
+    
     function renderAll(){ for (const ch of channels) renderOne(ch); }
     function setMain(ch, next){ ChannelState[ch].main = next; renderOne(ch); }
     function setCapturing(ch, flag){ ChannelState[ch].capturing = !!flag; renderOne(ch); }
@@ -255,22 +490,29 @@
         throw new Error('Unauthorized');
       }
 
-      // 截图流：按你原有逻辑处理
+      // 截图流 
       const ct = res.headers.get('Content-Type') || '';
+
       if (path === ENDPOINTS.capture && ct.startsWith('image/')) {
         const blob = await res.blob();
         const a = document.createElement('a');
+      
         a.href = URL.createObjectURL(blob);
+      
         const ch = (body && (body.channel || body.cid)) ?? 'ch';
         a.download = `capture_${ch}.jpg`;
-        document.body.appendChild(a); a.click(); a.remove();
+      
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      
         return { ok: true, downloaded: true };
       }
 
       const data = await res.json().catch(()=> ({}));
       if(!res.ok || data.ok === false){ throw new Error((data && data.error) || `HTTP ${res.status}`); }
       return data;
-    }
+     }
 
     // ======= Button actions =======
     document.addEventListener('click', async (e)=>{
@@ -287,7 +529,7 @@
       // Reboot（通过后端代理）
       if (btn.id === 'btnReboot') {
         if (!confirm('정말로 재시작할까요?')) return;
-        await callAPI(ENDPOINTS.reboot, 'POST');  // ← 必须是 POST
+        await callAPI(ENDPOINTS.reboot, 'POST');  // POST为必须
         toast('장치 재시작 중… 60–90초 후 새로고침');
         localStorage.removeItem('mc_token');
         redirectToLogin();
